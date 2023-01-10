@@ -1,20 +1,20 @@
-#Docker 
+# Docker 
 
-#What is it?
+## What is it?
 
 Service that runs/manages containers.
 
-##Containers
+## Containers
 
 A container is an isolated software environment. The idea is that it allows people with different computers (e.g. Mac vs windows, windows 8 vs windows 10 etc.) or different versions of programs (e.g. nvm 12 vs nvm 16) to be able to run the same application. 
 
 Containers run code. If the code that the container is instructed to run comes to and end, it will exit the process. However, if the container is something like a server, it may just keep running until it receives a terminal command to exit. 
 
-##Image
+## Image
 
 A description of how to build a container. This contains all the instructions of how to create a container for the application to run.
 
-##Analogy
+## Analogy
 
 Containers are like a box. Images are like instructions on how to make a box. 
 
@@ -53,12 +53,12 @@ NOTE: it may be the case that nano does not work. If that’s the case, try cat 
 cat ./utility-scripts/cleanup.sh
 
 
-##Docker Hub
+## Docker Hub
 
 Docker hub is essentially like a registry you can go to to look at and store docker images.
 
 
-##Docker Containers (more)
+## Docker Containers (more)
 
 You can do:
 .
@@ -77,7 +77,7 @@ docker image rm $(docker image ls -q)
 docker rmi $(docker images -q) => alternative way to remove all docker images. Note: first remove all containers before doing this.
 
 
-##Bind Mounts
+## Bind Mounts
 
 Allows you to pinpoint folders/files inside a container and store them on your local machine. Allows you to hook a folder on the container up to a folder on the host machine.
 
@@ -96,13 +96,13 @@ When setting up an application, make sure you’re installing all relevant files
 
 docker run -it —mount type=bind,src=$(“pwd”)/node-folder,dst=/code -w /code -p 3000:3000 node bash => the -p flag allows you to connect a specific port inside your container to a port on your local machine. This means that if you were to run an express server from inside a container, you could go to google chrome on your local machine, go to localhost 3000 and your server would be available.
 
-###-e
+### -e
 
 The e flag is important for feeding in info and values for variables. 
 
 NOTE: for every variable you wish to input, you must have a corresponding -e. For example, imagine you had two variables - PORT and apiKey. Your docker command would include “… -e PORT=3000 -e apiKey=dskjcbkewjdckw…”. 
 
-###-c 
+### -c 
 
 The c flag is used to instruct docker to run certain commands as soon as the container starts running. 
 
