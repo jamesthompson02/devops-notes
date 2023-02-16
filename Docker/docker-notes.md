@@ -24,28 +24,42 @@ Second image could be: made out of wood, triangular prism shape, green wrapping 
 Both are boxes but instructions on how to make the box differ significantly. In the same way every container has the same purpose but each one can be unique depending on the instructions (code) contained in the image.
 
 
-##Running Containers
+## Running Containers
 
 docker ps => list containers (default: only running containers).
+
 docker ps -a => list every container - including inactive ones.
+
 docker ps -q => (-q = quietly) lists every container (including inactive) but only the ID column.
+
 docker ps -aq => lists every container (even inactive) by only their ID column.
 
 docker run <image-name> => start a new container based on an image.
+
 docker rm <container-name> => delete an inactive container.
+
 docker pull <image-name> => If this image is not on your computer, this is the command to run to bring the image onto your computer. Bear in mind, however, that you can simply do “docker run … “ since if the image is not on your computer, it automatically runs “docker pull … “.
 
-Other docker commands
+## Other docker commands
 
 Docker image —help. => Using —help flag, generally, is quite useful in docker.
+
 Docker images => lists all docker images on your computer.
+
 Docker image ls => lists all docker images on your computer.
+
 docker rmi <image_id> => Removes a docker image. NOTE: in order to delete an image, you must first delete the container(s) associated with the image.
+
 docker system prune => Remove all docker containers
+
 Docker system prune —volumes —remove-orphans
+
 docker system prune -a => remove all Docker items
+
 docker rm $(docker ps -aq) 
+
 echo "docker rm $(docker ps -aq)" > ./utility-scripts/cleanup.sh.  => Allows you to store a terminal command in a bash script file and automatically creates the new file cleanup.sh (assumes you’ve already made a directory called utility-scripts).
+
 nano ./utility-scripts/cleanup.sh => allows you to open a file in the terminal and edit it. => To run a bash script (.sh file), start the terminal command by typing ‘bash’ followed by file name (bit like ‘node index.js’). 
 
 NOTE: it may be the case that nano does not work. If that’s the case, try cat instead:
@@ -61,19 +75,25 @@ Docker hub is essentially like a registry you can go to to look at and store doc
 ## Docker Containers (more)
 
 You can do:
-.
+
 docker run -it <image-name> => the -it flag lets docker know you want to create an interactive terminal.
+
 exit() => This allows you to exit the interactive terminal and the container (assuming your using python)
+
 process.exit() => allows you to exit interactive terminal which uses node.
 
 docker run -it [image name] [optional command]
+
 e.g. docker run -it python bash => That would open a bash terminal
+
 exit => all you need to type to exit a bash terminal.
 
 docker start -i [containerID] => Allows you to go back into pre-existing containers and see any files you have created in that container. 
+
 Docker stop [containerID] => Stops a running container.
 
 docker image rm $(docker image ls -q)
+
 docker rmi $(docker images -q) => alternative way to remove all docker images. Note: first remove all containers before doing this.
 
 
@@ -116,7 +136,7 @@ Or:
 
 Docker run -it —mount type=bind,src=$(“pwd”)/node-folder,dst=/code  -e PORT=3000 -p 3000:3000 node bash -c “cd code && npm run dev”
 
--d
+### -d
 
 The d flag is used to run a container in the background in detached mode. A good example of something to run in the background is a database. 
 
@@ -129,7 +149,7 @@ If running a postgres db, you can use psql in the terminal to interact with it.
 Docker exec [containerID] [command] - runs a command in a running container. Docker exec is NOT appropriate for a container that is inactive/ doesn’t exist.
 
 
--v (Volume flag)
+### -v (Volume flag)
 
 Volumes allow for data inside the container to persist after the container has stopped running. 
 
@@ -138,11 +158,11 @@ An example of part of a docker command may be:
 -v pgData:/var/lib/postgresql/data     => The bit after the colon is essentially an absolute path that begins from the root of the docker machine. pgData is a volume that is generated and is attached to the container. You would find a volume named pgData in the volumes section of the Docker GUI. 
 
 
-YAML
+## YAML
 
 Docker commands are obviously very long and precise. Moreover, to run a full application it may be the case that you need to run multiple containers simultaneously (E.g. container for a front end, container for a back end, container for a database) and have them connected and talking to one another. A good way to do this is to put all your docker commands in a yaml file, which you can simply run and it does it all for you.
 
-Features of a YAML file
+### Features of a YAML file
 
 1. Services - services are just docker containers. 
 2. Image - This is just the docker image you want to help create the container. 
@@ -153,9 +173,10 @@ Features of a YAML file
 7. Version - this goes at the top of a yaml file. It’s usual to choose version 3.
 
 
-Example of a YAML file
+### Example of a YAML file
 
 Imagine you had a docker command that looks like this:
+
 Docker run -it —mount type=bind,src=$(“pwd”)/node-folder,dst=/code -w /code -e PORT=3000 -p 3000:3000 -v pgData:/var/lib/postgresql/data node bash -c “npm run dev” 
 
 Note: for the -p flag, the first number is for the port on your local machine, the second number is for the port inside your docker container. In short, imagine you had node server which ran on port 5000 inside your docker container. If your docker command had “-p 3000:5000” this would mean your server would be accessible on google chrome on your local machine if you went to localhost 3000. 
@@ -163,30 +184,55 @@ Note: for the -p flag, the first number is for the port on your local machine, t
 This could be translated into a YAML file that looks like this:
 
 services:
+
     api:
+
          image: node
+
          volumes: 
+
                  - type: bind
+
                   - source: ./node-folder
+
                  - target: /code
+
          ports: 
+
                    - 3000:3000
+
          environment:
+
               - PORT=3000
+
          working_dir: /code
+
          command: bash -c “npm run dev”
+
      db:
+
          image: postgres
+
          volumes: 
+
              - type: bind
+
              - source: ./postgres-folder
+
              - target: /docker-entrypoint-initdb.d
+
           environment:
+
              - POSTGRES_PASSWORD=password
+
              -  POSTGRES_DB=rollercoasters
+
              - POSTGRES_USER=admin
+
              - pgData:/var/lib/postgresql/data
+
 volumes: 
+
     pgData:
   
 
@@ -208,11 +254,11 @@ Bear in mind, if you use the docker compose up command, it is looking for a file
 Docker compose up  -f go-bananas.yaml 
 
 
-Other Miscellaneous Docker Stuff
+## Other Miscellaneous Docker Stuff
 
 Docker inspect [containerID] => allows you to get some general info about the state of the container.
 
-Container Tags
+## Container Tags
 
 Say you run the command “docker run postgres”. This assumes in effect you are running “docker run Postgres:latest”.
 
@@ -221,9 +267,10 @@ Tags allow you to specify the version of an image you wish to use to create a co
 <image-name>:<image-version>
 
 
-Create own Docker image using Dockerfile
+## Create own Docker image using Dockerfile
 
 Questions to be answered (in this order) when creating own Docker image:
+
 1. What operating system are you using?
 2. Does operating system need to be updated for Docker engine to work on it ?
 3. What dependencies does your application have? Python/Node etc.?
@@ -236,18 +283,24 @@ Example of a Dockerfile:
 
 FROM Ubuntu
 
-RUN apt-get update                                      
+RUN apt-get update  
+
 RUN apt-get install python                            // Note: RUN apt-get is specific to the ubuntu OS.
 
 RUN pip install flask
+
 RUN pip install flask-mysql
 
+
 COPY . /opt/source-code
+
 
 ENTRYPOINT FLASK_APP=/opt/source-code/app.py flask run
 
 
+
 — End of docker file —
+
 
 Once you’ve created your docker file you can build it by running the command (in the same directory as where the docker file is):
 
@@ -260,7 +313,7 @@ nano Dockerfile
 
 
 
-Entrypoint
+## Entrypoint
 
 Entrypoint provides a way to have a dynamic docker command for your custom built image.
 
@@ -303,7 +356,7 @@ This would override the ENTRYPOINT[“sleep”]
 Note: final and complete command run once container is spun up will be a combo of ENTRYPOINT + CMD. 
 
 
-—name 
+### —name 
 
 The —name flag can be used to name containers. 
 
@@ -315,7 +368,7 @@ Docker run —name hello-world node
 The image is node but name of container is hello-world.
 
 
-Connecting docker containers (so they can communicate with one another) => —link & network
+## Connecting docker containers (so they can communicate with one another) => —link & network
 
 The —link flag is used to connect different docker containers. In a YAML file, you would use the links key to connect containers together. Links uses a hyphen for each link in the yaml file since the links key has an array value.
 
@@ -326,7 +379,7 @@ docker run --name clickcounter --link redis:redis -p 8085:5000 kodekloud/click-c
 Note: —link was the old-fashioned way to do it.
 
 
-Networks
+## Networks
 
 When you first install Docker, it creates 3 networks automatically: Bridge, none and host.
 
