@@ -2,62 +2,73 @@
 
 ## What is it?
 
+
 An automation platform that allows you to build, test and deploy software using pipelines. Helps facilitate continuous integration and continuous deployment.
 
 
 ## Jenkins Infrastructure 
 
+
 1. Master Server - controls pipelines and assigns builds to Agents
 2. Agents - Run the build in their workspace. Tend to be static computers.
 
+
 ## Typical Workflow for Jenkins
+
 
 1. User pushes some code to a repository (e.g. Github/Bitbucket)
 2. Master Server becomes aware that a commit has been pushed and triggers the appropriate pipeline
 3. Master Server will then assign an Agent the task of running the new build. It will assign a particular Agent based on configuration labels.
 4. Agent will then run build. Usually just a bunch of Linux commands.
 
+
 ## Agent Types
 
-There are two types of agents: 
+
+There are two types of agents:
 1. Permanent Node Agents - Dedicated servers for running jobs.
 2. Cloud Agents. Dynamic agents spun up on demand. Examples of these types are: Docker, Kubernetes and AWS fleet manager.
 
 
 ## Build Types
 
+
 1. Freestyle builds. Simplest method to create a build. Like shell scripts, that can be triggered by specific events (e.g. pushing commits).
 2. Pipelines. Use the groovy syntax. Use Stages to breakdown Components of builds.
 
-Example of pipeline:   stages {
-stage('Clone') {
-steps {
+Example of pipeline: 
 
-}
-}
-stage('Build') {
-steps {
+stages {
+    stage('Clone') {
+    steps {
 
-}
-}
-stage('Test') {
-steps {
-}
-}
-stage( 'Package') { 
-steps {
-}
-}
-stage(‘Deploy') {
-steps {
-}
-}
+    }
+    }
+    stage('Build') {
+    steps {
+
+    }
+    }
+    stage('Test') {
+    steps {
+    }
+    }
+    stage( 'Package') { 
+    steps {
+    }
+    }
+    stage(‘Deploy') {
+    steps {
+    }
+    }
 }
 
 
 ## Jenkins GUI
 
+
 ### Manage Jenkins
+
 
 This is a heading that should be apparent after the initial set up of Jenkins. It will be on the left-hand-side of the screen and this is where you can set up and manage agents for the master server.
 
@@ -109,6 +120,7 @@ Inside the var folder is where you will do a lot of troubleshooting. Folders lik
 
 
 ## Setting up Docker Cloud Agents
+
 
 On the main dashboard, go to ‘Manage Jenkins’. Under System Configuration click ‘Manage Nodes and Clouds’. 
 

@@ -85,7 +85,7 @@ Allows you to pinpoint folders/files inside a container and store them on your l
 
 Assume you’re in a directory where inside is a folder called ‘python-folder’. 
 
-An example of a terminal command which would bind a mount would be:  docker run -it —mount type=bind,src=$(“pwd”)/python-folder,dst=/code python bash
+An example of a terminal command which would bind a mount would be:docker run -it —mount type=bind,src=$(“pwd”)/python-folder,dst=/code python bash
 
 docker run -it —mount type=bind,src=$(“pwd”)/python-folder,dst=/code -w /code python bash => the -w /code starts the new terminal in the code folder - not the root folder.
 
@@ -155,7 +155,7 @@ Features of a YAML file
 
 Example of a YAML file
 
-Imagine you had a docker command that looks like this: 
+Imagine you had a docker command that looks like this:
 Docker run -it —mount type=bind,src=$(“pwd”)/node-folder,dst=/code -w /code -e PORT=3000 -p 3000:3000 -v pgData:/var/lib/postgresql/data node bash -c “npm run dev” 
 
 Note: for the -p flag, the first number is for the port on your local machine, the second number is for the port inside your docker container. In short, imagine you had node server which ran on port 5000 inside your docker container. If your docker command had “-p 3000:5000” this would mean your server would be accessible on google chrome on your local machine if you went to localhost 3000. 
@@ -229,7 +229,7 @@ Questions to be answered (in this order) when creating own Docker image:
 3. What dependencies does your application have? Python/Node etc.?
 4. How to install these dependencies on your new OS?
 5. How to get the source code of your app into the container?
-6. Commands that need to be executed in order for your app to run when the container becomes active?  
+6. Commands that need to be executed in order for your app to run when the container becomes active? 
 Example of a Dockerfile:
 
 —start of docker file—-
