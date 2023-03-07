@@ -179,3 +179,113 @@ Fargate reduces amount of stuff you have to manage for container orchestration.
 
 
 ## Content and Network Delivery Services (new section)
+
+There are 6 networking and content delivery services that are worth remembering:
+
+1. Amazon Route 53
+2. Amazon VPC
+3. AWS Direct Connect
+4. Amazon API Gateway
+5. Amazon Cloudfront
+6. Elastic Load Balancing
+
+### Amazon VPC (Virtual Private Cloud)
+
+An Amazon VPC is a logically isolated part of the cloud where you can launch AWS resources in a network that you define. In short, this enables virtual networks within AWS.
+
+Amazon VPC also supports both IPv4 and IPv6 addresses.
+
+Allows for config of: IP address range, subnets, route tables and network gateways.
+
+Supports both public and private subnets. Private means that it can’t communicate with the internet at large, whereas with public it can connect to the internet (and vice versa).
+
+Enables a connection to your own data centre.
+
+Can connect to other VPCs.
+
+Supports private connections to many AWS services.
+
+
+### AWS Direct Connect
+
+A cloud service solution that makes it easy to establish a dedicated network connection from your data centre to AWS.
+
+
+### Amazon Route 53
+
+This is AWS’s DNS service. 
+
+It’s a domain name service. 
+
+It’s a global service (not regional). This means it does not require region selection. Changes get applied globally (everywhere your app is served).
+
+It’s highly available - so minimal downtime. Also means if a server goes down in one region traffic can quickly be re-routed to rely on a server in a different location.
+
+Enables global resource routing. 
+
+Route 53 Dashboard can be accessed via AWS Console.
+
+
+### Elastic Load Balancing
+
+The key way it upholds the principle of elasticity is by distributing traffic across multiple targets (E.g. servers), based on the current workload of those targets (targets e.g. servers will receive more traffic than others if they have a lower current workload).
+
+Integrates with EC2, ECS and Lambda. Note: ECS is AWS’s container service (e.g. running docker containers).
+
+Supports 1 or more availability zones in a region.
+
+Has 3 types of load balancers:
+
+1. Application Load Balancer
+2. Network Load Balancer
+3. Classic Load Balancer
+
+
+### Scaling on Amazon EC2
+
+Two types of scaling: vertical and horizontal. Vertical is when you have an instance (or multiple instances) and you realise that your servers do not necessarily have the specs to be able to cope with additional demand. In this case, vertical scaling is taking a pre-existing server and upgrading it to something with better specs (E.g. performance, memory, storage etc.). This is usually not advisable since it requires downtime to get the new, upgraded instance up and running.
+
+Alternatively, you can do horizontal scaling. This is essentially when the more instances of the same type are spun up when necessary to meet the challenge of additional demand. This is the preferred method for scaling up.
+
+
+### Amazon Cloudfront
+
+It’s a service that leverages the edge locations within the AWS Global infrastructure. It’s a content delivery network. Enables content to be served to users from the server that is geographically closest to them (speed is everything). 
+
+Supports static and dynamic content.
+
+Includes advanced cybersecurity features like:
+
+1. AWS Shield for DDOS attacks
+2. AWS Web Application Firewall
+
+
+### Amazon API Gateway
+
+Fully managed API management service. Directly integrates with multiple AWS Services. 
+
+Provides monitoring and metrics on API calls.
+
+Supports VPC and on-premise private applications. 
+
+
+### AWS Global Accelerator
+
+This is a networking service that sends your users’ traffic AWS global network infrastructure, improving internet user performance substantially. 
+
+Utilises IP addresses that route to edge locations. 
+
+Once request reaches an edge location, it uses an AWS network to route that traffic - rather than just the internet.
+
+Can route requests to many different AWS resources (e.g. EC2 instance).
+
+
+### When to use AWS Global Accelerator vs. Cloudfront
+
+
+When using a non-HTTP Protocol. 
+
+Requires a static IP. 
+
+
+## File Storage Services (new section)
